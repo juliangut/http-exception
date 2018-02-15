@@ -1,0 +1,111 @@
+{
+  "name": "juliangut/http-exception",
+  "description": "HTTP aware exceptions",
+  "keywords": [
+    "HTTP",
+    "exception"
+  ],
+  "homepage": "https://github.com/juliangut/http-exception",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Julián Gutiérrez",
+      "email": "juliangut@gmail.com",
+      "homepage": "http://juliangut.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/juliangut/http-exception",
+    "issues": "https://github.com/juliangut/http-exception/issues"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.0",
+    "fig/http-message-util": "^1.1",
+    "pascaldevink/shortuuid": "^1.0"
+  },
+  "require-dev": {
+    "brainmaestro/composer-git-hooks": "^2.1",
+    "editorconfig-checker/editorconfig-checker": "^7.0",
+    "friendsofphp/php-cs-fixer": "^2.0",
+    "infection/infection": "^0.7.0",
+    "phpmd/phpmd": "^2.0",
+    "phpmetrics/phpmetrics": "^2.0",
+    "phpstan/phpstan": "^0.9",
+    "phpstan/phpstan-strict-rules": "0.9",
+    "phpunit/phpunit": "^5.7|^6.0",
+    "povils/phpmnd": "^1.1",
+    "roave/security-advisories": "dev-master",
+    "sebastian/phpcpd": "^2.0",
+    "squizlabs/php_codesniffer": "^2.0"
+  },
+  "suggest": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Jgut\\HttpException\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jgut\\HttpException\\Tests\\": "tests/HttpException/"
+    }
+  },
+  "bin": [
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "scripts": {
+    "cghooks": "cghooks",
+    "post-install-cmd": "cghooks add --ignore-lock",
+    "post-update-cmd": "cghooks update",
+    "php-lint": "php -l src && php -l tests",
+    "editorconfig-lint": "editorconfig-checker src/* tests/*",
+    "editorconfig-fix": "editorconfig-checker --auto-fix src/* tests/*",
+    "phpcs": "phpcs --standard=PSR2 src tests",
+    "phpcs-lint": "php-cs-fixer fix --dry-run --verbose",
+    "phpcs-fix": "php-cs-fixer fix --verbose",
+    "phpcpd": "phpcpd src",
+    "phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
+    "phpmnd": "phpmnd ./ --exclude=tests",
+    "phpmetrics-report": "phpmetrics --report-html=build/metrics --offline .",
+    "phpstan": "phpstan analyse --level max -c phpstan.neon src",
+    "phpunit": "phpunit",
+    "phpunit-coverage": "phpunit --coverage-html build/coverage",
+    "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
+    "infection": "infection",
+    "qa": [
+      "@php-lint",
+      "@editorconfig-lint",
+      "@phpcs",
+      "@phpcs-lint",
+      "@phpcpd",
+      "@phpmd",
+      "@phpmnd",
+      "@phpstan"
+    ],
+    "reports": [
+      "@phpmetrics-report",
+      "@phpunit-coverage"
+    ],
+    "fix": [
+      "@editorconfig-fix",
+      "@phpcs-fix"
+    ],
+    "security": "composer outdated",
+    "test": [
+      "@php-lint",
+      "@phpunit",
+      "@infection"
+    ]
+  },
+  "extra": {
+    "hooks": {
+      "pre-commit": "composer qa && composer phpunit"
+    }
+  }
+}
