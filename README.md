@@ -30,7 +30,26 @@ Require composer autoload file
 require './vendor/autoload.php';
 ```
 
-> Usage instructions go here
+HTTP aware exceptions are just like normal exceptions but carrying an HTTP Status Code
+
+```php
+use Jgut\HttpException\HttpException;
+
+$exceptionMessage = 'You shall not pass!';
+$exceptionDescription = 'You do not have permission';
+$exceptionCode = 1001; // Internal code
+$previousException = new \Exception();
+$exception = new BadRequestHttpException($exceptionMessage, $exceptionDescription, $exceptionCode, $previousException);
+
+$exception->getStatusCode(); // 400 Bad Request
+```
+
+Additionally exceptions have a description and a unique identifier which can be used in logging and displaying for example on APIs, allowing you to have more information over the erroneous situation when addressed
+
+```php
+$exception->getDescription();
+$exception->getIdentifier();
+```
 
 ## Contributing
 
