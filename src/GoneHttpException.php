@@ -23,19 +23,23 @@ class GoneHttpException extends HttpException
     /**
      * Gone Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Gone',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_GONE,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_GONE;
+        parent::__construct(
+            $message ?? 'Gone',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_GONE,
+            StatusCodeInterface::STATUS_GONE,
+            $previous
+        );
     }
 }

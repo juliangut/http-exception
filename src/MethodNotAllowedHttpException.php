@@ -30,20 +30,24 @@ class MethodNotAllowedHttpException extends HttpException
     /**
      * Method Not Allowed Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Method Not Allowed',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED;
+        parent::__construct(
+            $message ?? 'Method Not Allowed',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED,
+            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED,
+            $previous
+        );
     }
 
     /**

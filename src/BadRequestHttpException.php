@@ -23,19 +23,23 @@ class BadRequestHttpException extends HttpException
     /**
      * Bad Request Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Bad Request',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_BAD_REQUEST,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_BAD_REQUEST;
+        parent::__construct(
+            $message ?? 'Bad Request',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_BAD_REQUEST,
+            StatusCodeInterface::STATUS_BAD_REQUEST,
+            $previous
+        );
     }
 }

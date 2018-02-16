@@ -21,21 +21,23 @@ use Fig\Http\Message\StatusCodeInterface;
 class UnauthorizedHttpException extends HttpException
 {
     /**
-     * Unauthorized Exception constructor.
-     *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Unauthorized',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_UNAUTHORIZED,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_UNAUTHORIZED;
+        parent::__construct(
+            $message ?? 'Unauthorized',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_UNAUTHORIZED,
+            StatusCodeInterface::STATUS_UNAUTHORIZED,
+            $previous
+        );
     }
 }

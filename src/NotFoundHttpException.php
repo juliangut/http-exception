@@ -23,19 +23,23 @@ class NotFoundHttpException extends HttpException
     /**
      * Not Found Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Not Found',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_NOT_FOUND,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_NOT_FOUND;
+        parent::__construct(
+            $message ?? 'Not Found',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_NOT_FOUND,
+            StatusCodeInterface::STATUS_NOT_FOUND,
+            $previous
+        );
     }
 }

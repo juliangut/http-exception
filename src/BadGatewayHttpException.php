@@ -23,19 +23,23 @@ class BadGatewayHttpException extends HttpException
     /**
      * Bad Gateway Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Bad Gateway',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_BAD_GATEWAY,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_BAD_GATEWAY;
+        parent::__construct(
+            $message ?? 'Bad Gateway',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_BAD_GATEWAY,
+            StatusCodeInterface::STATUS_BAD_GATEWAY,
+            $previous
+        );
     }
 }

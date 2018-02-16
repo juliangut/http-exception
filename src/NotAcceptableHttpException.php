@@ -23,19 +23,23 @@ class NotAcceptableHttpException extends HttpException
     /**
      * Not Acceptable Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Not Acceptable',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_NOT_ACCEPTABLE,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_NOT_ACCEPTABLE;
+        parent::__construct(
+            $message ?? 'Not Acceptable',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_NOT_ACCEPTABLE,
+            StatusCodeInterface::STATUS_NOT_ACCEPTABLE,
+            $previous
+        );
     }
 }

@@ -23,19 +23,23 @@ class UnprocessableEntityHttpException extends HttpException
     /**
      * Unprocessable Entity Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Unprocessable Entity',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY;
+        parent::__construct(
+            $message ?? 'Unprocessable Entity',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+            StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+            $previous
+        );
     }
 }

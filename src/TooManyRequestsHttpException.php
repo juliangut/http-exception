@@ -23,19 +23,23 @@ class TooManyRequestsHttpException extends HttpException
     /**
      * Too Many Requests Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Too Many Requests',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_TOO_MANY_REQUESTS,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_TOO_MANY_REQUESTS;
+        parent::__construct(
+            $message ?? 'Too Many Requests',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_TOO_MANY_REQUESTS,
+            StatusCodeInterface::STATUS_TOO_MANY_REQUESTS,
+            $previous
+        );
     }
 }

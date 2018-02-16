@@ -23,19 +23,23 @@ class InternalServerErrorHttpException extends HttpException
     /**
      * InternalServerError Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Internal Server Error',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;
+        parent::__construct(
+            $message ?? 'Internal Server Error',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
+            StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
+            $previous
+        );
     }
 }

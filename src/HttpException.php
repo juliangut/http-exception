@@ -19,8 +19,10 @@ use PascalDeVink\ShortUuid\ShortUuid;
 /**
  * HTTP exception class.
  */
-abstract class HttpException extends \DomainException
+class HttpException extends \DomainException
 {
+    const STATUS_CODE_LIMIT = 600;
+
     /**
      * Unique error identifier.
      *
@@ -40,7 +42,7 @@ abstract class HttpException extends \DomainException
      *
      * @var int
      */
-    protected $statusCode = StatusCodeInterface::STATUS_BAD_REQUEST;
+    protected $statusCode;
 
     /**
      * HTTP Exception constructor.
@@ -48,18 +50,27 @@ abstract class HttpException extends \DomainException
      * @param string          $message
      * @param string          $description
      * @param int             $code
+     * @param int             $statusCode
      * @param \Throwable|null $previous
+     *
+     * @throws \RuntimeException
      */
     public function __construct(
         string $message,
         string $description,
         int $code,
+        int $statusCode,
         \Throwable $previous = null
     ) {
+        if ($statusCode < StatusCodeInterface::STATUS_BAD_REQUEST || $statusCode >= static::STATUS_CODE_LIMIT) {
+            throw new \RuntimeException(\sprintf('%s is not a valid HTTP error status code', $statusCode));
+        }
+
         parent::__construct(\trim($message), $code, $previous);
 
         $this->identifier = ShortUuid::uuid4();
         $this->description = \trim($description);
+        $this->statusCode = $statusCode;
     }
 
     /**

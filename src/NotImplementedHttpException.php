@@ -23,19 +23,23 @@ class NotImplementedHttpException extends HttpException
     /**
      * Not Implemented Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Not Implemented',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_NOT_IMPLEMENTED,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_NOT_IMPLEMENTED;
+        parent::__construct(
+            $message ?? 'Not Implemented',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_NOT_IMPLEMENTED,
+            StatusCodeInterface::STATUS_NOT_IMPLEMENTED,
+            $previous
+        );
     }
 }

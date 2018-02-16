@@ -23,19 +23,23 @@ class ForbiddenHttpException extends HttpException
     /**
      * Forbidden Exception constructor.
      *
-     * @param string          $message
-     * @param string          $description
-     * @param int             $code
+     * @param string|null     $message
+     * @param string|null     $description
+     * @param int|null        $code
      * @param \Throwable|null $previous
      */
     public function __construct(
-        string $message = 'Forbidden',
-        string $description = '',
-        int $code = StatusCodeInterface::STATUS_FORBIDDEN,
+        string $message = null,
+        string $description = null,
+        int $code = null,
         \Throwable $previous = null
     ) {
-        parent::__construct($message, $description, $code, $previous);
-
-        $this->statusCode = StatusCodeInterface::STATUS_FORBIDDEN;
+        parent::__construct(
+            $message ?? 'Forbidden',
+            $description ?? '',
+            $code ?? StatusCodeInterface::STATUS_FORBIDDEN,
+            StatusCodeInterface::STATUS_FORBIDDEN,
+            $previous
+        );
     }
 }

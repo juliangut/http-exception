@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Jgut\HttpException\Tests;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Jgut\HttpException\Tests\Stubs\HttpExceptionStub;
+use Jgut\HttpException\HttpException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,11 +22,31 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpExceptionTest extends TestCase
 {
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage 200 is not a valid HTTP error status code
+     */
+    public function testInvalidStatusCode()
+    {
+        new HttpException(
+            'message',
+            'description',
+            1000,
+            StatusCodeInterface::STATUS_OK
+        );
+    }
+
     public function testException()
     {
         $previous = new \Exception('previous');
 
-        $exception = new HttpExceptionStub('message', 'description', 1000, $previous);
+        $exception = new HttpException(
+            'message',
+            'description',
+            1000,
+            StatusCodeInterface::STATUS_BAD_REQUEST,
+            $previous
+        );
 
         self::assertNotNull($exception->getIdentifier());
         self::assertSame('message', $exception->getMessage());
